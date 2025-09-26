@@ -1,92 +1,120 @@
-body {
-  margin: 0;
-  font-family: 'Comic Sans MS', cursive, sans-serif;
-  background: linear-gradient(135deg, #ff9aeb, #ff6f91, #ff9671);
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+:root {
+  --w: min(92vw, 700px); /* базовая ширина приложения */
 }
 
-.container {
-  text-align: center;
-  position: relative;
+* { box-sizing: border-box; }
+html,body { height: 100%; }
+
+body{
+  margin:0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Noto Color Emoji", sans-serif;
+  color:#fff;
+  background: radial-gradient(1200px 700px at 30% -10%, #ffa4e8 0%, #ff6ea3 25%, #ff7f8b 45%, #ff8b7c 60%, #ff8d73 100%)
+              fixed;
 }
 
-.main-photo img {
-  width: 120px;
-  height: 120px;
-  border-radius: 50%;
-  border: 5px solid #fff;
-  box-shadow: 0 0 15px pink;
-  cursor: pointer;
-  position: relative;
-  z-index: 5;
+.app{
+  width:var(--w);
+  margin:0 auto;
+  padding:42px 12px 56px;
+  text-align:center;
+  position:relative;
 }
 
-/* кружки по кругу */
-.circle-photos {
-  position: absolute;
-  width: 500px;
-  height: 500px;
-  top: -200px;
-  left: 50%;
-  transform: translateX(-50%);
+/* главное фото */
+.main-photo{
+  width:120px; height:120px;
+  margin:0 auto 18px;
+  border-radius:50%;
+  padding:6px;
+  background: radial-gradient(circle at 30% 30%, #fff, #ffd6f0 55%, #ff69b4 100%);
+  box-shadow: 0 10px 30px rgba(255, 90, 160, .45), 0 0 25px rgba(255,255,255,.5) inset;
+  cursor:pointer;
+}
+.main-photo img{
+  width:100%; height:100%; border-radius:50%; object-fit:cover;
+  display:block;
 }
 
-.circle-photos img {
-  position: absolute;
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
-  border: 3px solid #fff;
-  box-shadow: 0 0 10px #ffb6c1;
+/* орбита фото */
+.orbit{
+  position:absolute; inset:0; pointer-events:none;
+  height: 420px;
 }
-
-/* симметрия по кругу (6 фоток) */
-.circle-photos img:nth-child(1) { top: 0; left: 50%; transform: translateX(-50%); }
-.circle-photos img:nth-child(2) { top: 90px; left: 90%; transform: translateX(-50%); }
-.circle-photos img:nth-child(3) { top: 280px; left: 100%; transform: translateX(-50%); }
-.circle-photos img:nth-child(4) { top: 280px; left: 0%; transform: translateX(-50%); }
-.circle-photos img:nth-child(5) { top: 90px; left: 10%; transform: translateX(-50%); }
-.circle-photos img:nth-child(6) { top: -50px; left: 80%; transform: translateX(-50%); }
-
-.speedometer {
-  margin-top: 40px;
+.orbit .orb{
+  position:absolute; width:72px; height:72px;
+  border-radius:50%; overflow:hidden;
+  border:4px solid #fff;
+  box-shadow: 0 6px 18px rgba(255,255,255,.25), 0 0 18px rgba(255,180,220,.65);
 }
+.orbit .orb img{ width:100%; height:100%; object-fit:cover; }
 
-svg {
-  width: 500px;
-  height: 300px;
-}
+/* контейнер SVG */
+.gauge{ width:100%; display:flex; justify-content:center; }
+#meter{ width:100%; max-width:700px; height:auto; }
 
-.label {
-  font-size: 18px;
-  fill: white;
-  text-shadow: 0 0 10px #ff69b4;
-}
+#band{ filter: drop-shadow(0 8px 20px rgba(255,120,170,.35)); }
 
-.highlight {
-  fill: yellow;
-  font-weight: bold;
+/* подписи */
+#labels text{
+  font-size:18px;
+  fill:#fff;
+  paint-order: stroke;
+  stroke:#ff7fb8;
+  stroke-width:0.6px;
+  text-shadow: 0 0 14px rgba(255,160,210,.85);
 }
+#labels text.final { fill: #fff470; font-weight:700; }
 
 /* стрелка */
-#needle {
-  fill: red;
-  stroke: black;
-  stroke-width: 1;
-  transform-origin: 250px 250px;
-  transform: rotate(-90deg);
-  transition: transform 6s ease-in-out;
+#needle{
+  transform-origin: 300px 280px;
+  transform: rotate(-110deg);            /* исходное крайнее левое */
+  will-change: transform;
+}
+#needle.run{
+  animation: sweepToLove 6.5s cubic-bezier(.2,.9,.2,1) forwards;
+}
+@keyframes sweepToLove{
+  0%   { transform: rotate(-110deg); }
+  28%  { transform: rotate(  10deg); }
+  55%  { transform: rotate(  70deg); }
+  74%  { transform: rotate(  96deg); }
+  86%  { transform: rotate( 106deg); }
+  100% { transform: rotate( 110deg); } /* финал = «Ваня+Настя» */
 }
 
-button {
-  margin-top: 20px;
-  padding: 12px 25px;
-  font-size: 18px;
-  border: none;
-  border-radius: 25px;
-  background: linear-gradient(to right, #ff758c, #ff7eb3);
-  color: white;
-  cursor
+/* кнопка */
+#measureBtn{
+  appearance:none; border:0; cursor:pointer; color:#fff;
+  margin-top:18px; padding:14px 26px; font-size:18px; border-radius:999px;
+  background: linear-gradient(90deg,#ff72a5,#ff84c2 50%, #ff99d8);
+  box-shadow: 0 10px 28px rgba(255,120,170,.55), 0 2px 0 rgba(255,255,255,.35) inset;
+  transition: transform .18s ease, box-shadow .18s ease;
+}
+#measureBtn:hover{ transform: translateY(-2px) scale(1.03); }
+#measureBtn:active{ transform: translateY(0); }
+
+#result{
+  min-height: 28px;
+  margin-top: 10px;
+  font-size: 20px;
+  text-shadow: 0 0 18px rgba(255,160,210,.8);
+}
+
+/* сердечки (пасхалка) */
+.heart{
+  position:fixed; bottom:-20px;
+  font-size:22px; pointer-events:none;
+  animation: floatUp linear forwards;
+}
+@keyframes floatUp{
+  to { transform: translateY(-120vh) translateX(var(--dx,0px)) scale(1.4);
+       opacity: 0; }
+}
+
+/* адаптив мелкий экран */
+@media (max-width:560px){
+  #labels text{ font-size:16px; }
+  .orbit .orb{ width:60px; height:60px; }
+}
