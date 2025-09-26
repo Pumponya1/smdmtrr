@@ -21,11 +21,20 @@
     <!-- Спидометр -->
     <main class="gauge-wrap">
       <div class="gauge-card">
-        <svg id="loveGauge" viewBox="-160 -20 320 200">
-          <path d="M -140,120 A 140 140 0 0 1 140 120" class="arc"></path>
+        <svg id="loveGauge" viewBox="-160 -20 320 200" aria-label="Шкала любви">
+          <!-- Полуокружность -->
+          <path id="arc" d="M -140,120 A 140 140 0 0 1 140 120" class="arc"></path>
+
+          <!-- Засечки -->
           <g id="ticks"></g>
+
+          <!-- Подписи -->
           <g id="labels"></g>
+
+          <!-- Ось -->
           <circle cx="0" cy="120" r="6" class="axis"></circle>
+
+          <!-- Стрелка -->
           <g id="needle" class="needle" transform="rotate(-90)">
             <polygon points="-4,120 4,120 0,-10"></polygon>
             <path d="M0,10 c -4,-6 -12,-6 -12,2 c 0,6 6,10 12,16 c 6,-6 12,-10 12,-16 c 0,-8 -8,-8 -12,-2 Z"
