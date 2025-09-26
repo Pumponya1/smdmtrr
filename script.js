@@ -1,6 +1,7 @@
 const btn = document.getElementById("startBtn");
 const needle = document.getElementById("needle");
 const result = document.getElementById("result");
+const music = document.getElementById("bgMusic");
 
 const levels = [
   "Приятное общение ✨",
@@ -9,36 +10,44 @@ const levels = [
   "Любовь ❤️",
   "Ваня + Настя 💖 Судьба!"
 ];
-
-// Углы для стрелки (-90° = влево, +90° = вправо)
 const angles = [-90, -45, 0, 45, 90];
 
+const texts = document.querySelectorAll(".label");
+
 btn.addEventListener("click", () => {
+  // включаем музыку при первом клике
+  if (music.paused) music.play();
+
   const rand = Math.floor(Math.random() * levels.length);
-  const angle = angles[rand];
+  const finalAngle = angles[rand];
 
-  // сброс
-  needle.style.transition = "transform 0s";
-  needle.style.transform = "rotate(-90deg)";
+  // сброс подсветки
+  texts.forEach(t => t.classList.remove("active"));
 
-  setTimeout(() => {
-    needle.style.transition = "transform 6s ease-in-out";
-    needle.style.transform = `rotate(${angle}deg)`;
-
-    setTimeout(() => {
+  // имитация дёргания (7 секунд)
+  let t = 0;
+  const interval = setInterval(() => {
+    const jitter = finalAngle + (Math.random() * 30 - 15);
+    needle.setAttribute("transform", `rotate(${jitter} 250 250)`);
+    t += 200;
+    if (t > 7000) {
+      clearInterval(interval);
+      // финальное положение
+      needle.setAttribute("transform", `rotate(${finalAngle} 250 250)`);
       result.textContent = levels[rand];
-    }, 6000);
+      texts[rand].classList.add("active");
+    }
+  }, 200);
 
-    // возврат стрелки назад через 20с
-    setTimeout(() => {
-      needle.style.transition = "transform 3s ease-in-out";
-      needle.style.transform = "rotate(-90deg)";
-      result.textContent = "";
-    }, 20000);
-  }, 100);
+  // возврат стрелки через 20с
+  setTimeout(() => {
+    needle.setAttribute("transform", "rotate(-90 250 250)");
+    result.textContent = "";
+    texts.forEach(t => t.classList.remove("active"));
+  }, 20000);
 });
 
-// 🔐 секретный режим
+// 🔐 секретный режим (3 клика по аватарке)
 let clicks = 0;
 document.querySelector(".avatar img").addEventListener("click", () => {
   clicks++;
