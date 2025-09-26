@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Шкала нашей любви 💖</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Главное фото -->
+    <div class="main-photo">
+      <img src="images/photo.jpg" alt="Мы">
+    </div>
+
+    <!-- Кружки вокруг -->
+    <div class="circle-photos">
+      <img src="images/p1.jpg" alt="">
+      <img src="images/p2.jpg" alt="">
+      <img src="images/p3.jpg" alt="">
+      <img src="images/p4.jpg" alt="">
+      <img src="images/p5.jpg" alt="">
+      <img src="images/p6.jpg" alt="">
+    </div>
+
+    <!-- Спидометр (SVG с текстом по дуге) -->
+    <div class="speedometer">
+      <svg viewBox="0 0 500 300">
+        <path id="arc" d="M 50 250 A 200 200 0 0 1 450 250" fill="none"/>
+        
+        <text class="label"><textPath href="#arc" startOffset="5%">Приятное общение</textPath></text>
+        <text class="label"><textPath href="#arc" startOffset="25%">Симпатия</textPath></text>
+        <text class="label"><textPath href="#arc" startOffset="45%">Влюблённость</textPath></text>
+        <text class="label"><textPath href="#arc" startOffset="65%">Любовь</textPath></text>
+        <text class="label highlight"><textPath href="#arc" startOffset="85%">Ваня + Настя 💖</textPath></text>
+
+        <line id="needle" x1="250" y1="250" x2="50" y2="250"></line>
+      </svg>
+    </div>
+
+    <!-- Кнопка -->
+    <button id="measureBtn">Измерить любовь 💘</button>
+
+    <!-- Результат -->
+    <div id="result"></div>
+  </div>
+
+  <audio id="bgMusic" src="song.mp3"></audio>
+  <script src="script.js"></script>
+</body>
+</html>
