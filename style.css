@@ -1,32 +1,37 @@
 :root{
-  --bg1:#5f0a87;
-  --bg2:#a4508b;
-  --bg3:#ff6f91;
+  /* Фон: фиолетово-розовый градиент */
+  --bg1:#5f0a87;   /* фиолетовый */
+  --bg2:#a4508b;   /* мажента */
+  --bg3:#ff6f91;   /* розовый */
+
   --text:#fff;
   --muted:#ffd3ec;
-  --accent:#ff4d6d;
-  --tick:#ffffffaa;
+  --accent:#ff4d6d;    /* сердечко стрелки */
+  --tick:#ffffffcc;    /* засечки */
+  --active:#ffd1e6;    /* подсветка активного уровня */
 }
 
 *{box-sizing:border-box}
+html,body{height:100%}
 body{
   margin:0; color:var(--text);
-  font-family: system-ui, sans-serif;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", sans-serif;
   background: linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg3));
-  min-height:100vh;
 }
 
-.page{min-height:100vh; display:flex; flex-direction:column; gap:24px;}
+.page{min-height:100%; display:flex; flex-direction:column; gap:24px;}
 
 .hero{
   margin-top:24px; text-align:center;
   display:flex; flex-direction:column; align-items:center; gap:12px;
 }
+
+/* Яркая, но без мигания */
 .photo-ring{
-  width:130px; height:130px; border-radius:50%;
+  width:132px; height:132px; border-radius:50%;
   padding:6px;
-  background: conic-gradient(#ff6f91,#ff3f8e,#9f2bc1,#ff6f91);
-  box-shadow:0 0 20px #ff3f8e80;
+  background: conic-gradient(#ff6f91, #ff3f8e, #9f2bc1, #ff6f91);
+  box-shadow:0 6px 24px #0006, 0 0 0 3px #ffffff30 inset;
 }
 .photo-ring img{
   width:100%; height:100%;
@@ -39,25 +44,51 @@ h1{margin:6px 0 0; font-weight:800;}
 
 .gauge-wrap{display:flex; justify-content:center; padding:8px 16px 32px;}
 .gauge-card{
-  width:min(680px,92vw);
-  background:#ffffff10; border-radius:24px; padding:20px;
+  width:min(720px, 92vw);
+  background:#0000001a; border-radius:24px; padding:20px;
   position:relative; overflow:hidden;
   backdrop-filter: blur(8px);
   box-shadow:0 10px 30px #0008;
 }
 
-svg{width:100%; height:auto;}
-.arc{fill:none; stroke:#ffffff80; stroke-width:14; stroke-linecap:round;}
-#ticks line{stroke:var(--tick); opacity:0.7}
-#ticks line.major{stroke:#fff; opacity:1}
-#labels text{fill:#fff; font-size:14px; transition:fill 0.3s;}
-#labels text.active{fill:#ff6f91; font-weight:700;}
-.axis{fill:#fff}
-.needle polygon{fill:#fff}
-.needle .heart-tip{fill:var(--accent)}
-.needle{transform-origin:0px 120px; filter:drop-shadow(0 4px 10px #0008)}
+svg{ width:100%; height:auto; display:block; }
 
-.readout{text-align:center; margin-top:10px; font-weight:700; font-size:1.25rem;}
-.controls{margin-top:12px; display:flex; justify-content:center;}
-.btn{cursor:pointer; padding:12px 16px; border:none; border-radius:14px; font-weight:700;}
-.btn.primary{background:linear-gradient(90deg,#8e2de2,#ff6f91); color:white;}
+.arc{
+  fill:none;
+  stroke:#ffffff80;
+  stroke-width:14;
+  stroke-linecap:round;
+}
+
+/* Засечки и подписи */
+#ticks line{ stroke:var(--tick); stroke-width:2 }
+#labels text{
+  fill:#fff; font-size:16px; letter-spacing:.2px;
+  paint-order: stroke; stroke:#0008; stroke-width:2px; /* читаемость на фоне */
+  transition: transform .18s ease, fill .18s ease, text-shadow .18s ease;
+}
+#labels text.active{
+  fill:var(--active);
+  text-shadow: 0 0 12px #fff8, 0 0 24px #ffd1e6cc;
+}
+
+/* Стрелка */
+.axis{ fill:#fff }
+.needle{ transform-origin: 0px 120px; filter: drop-shadow(0 6px 14px #0008) }
+.needle polygon{ fill:#fff }
+.needle .heart-tip{ fill:var(--accent) }
+
+/* Подпись-значение */
+.readout{ text-align:center; margin-top:12px; font-weight:800; font-size:1.2rem; }
+.controls{ margin-top:12px; display:flex; justify-content:center; }
+.btn{
+  cursor:pointer; border:none; border-radius:14px;
+  padding:12px 18px; font-weight:800;
+  background:linear-gradient(90deg,#8e2de2,#ff6f91); color:#fff;
+  box-shadow:0 10px 20px #8e2de250;
+}
+
+/* Мобилки */
+@media (max-width:520px){
+  #labels text{ font-size:14px }
+}
