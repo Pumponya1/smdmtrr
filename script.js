@@ -10,8 +10,7 @@ btn.addEventListener("click", () => {
   // Запускаем музыку
   music.play();
 
-  // Анимация стрелки
-  needle.style.transition = "transform 6s ease-in-out";
+  // Анимация стрелки до конца
   needle.style.transform = "rotate(90deg)";
 
   // Результат
