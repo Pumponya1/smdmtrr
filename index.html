@@ -2,55 +2,42 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <title>Шкала нашей любви 💖</title>
+  <title>Шкала Любви</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
-    <!-- Фото -->
-    <div class="avatar">
-      <img src="images/avatar.jpg" alt="Мы">
+
+    <!-- Фото сверху -->
+    <div class="photo top-photo">
+      <img src="top.jpg" alt="Фото сверху">
     </div>
 
-    <!-- Спидометр -->
-    <div class="speedometer">
-      <svg viewBox="0 0 500 300" class="gauge">
-        <defs>
-          <linearGradient id="gradient">
-            <stop offset="0%" stop-color="#4fc3f7"/>
-            <stop offset="50%" stop-color="#aeea00"/>
-            <stop offset="100%" stop-color="#f44336"/>
-          </linearGradient>
-          <path id="arc" d="M70 250 A180 180 0 0 1 430 250" fill="none"/>
-        </defs>
+    <!-- Шкала любви -->
+    <div class="scale">
+      <div class="labels">
+        <div>😊 Приятное общение</div>
+        <div>🤗 Дружеская симпатия</div>
+        <div>💘 Влюблённость</div>
+        <div>❤️ Любовь</div>
+        <div>✨ Ваня + Настя</div>
+      </div>
+      <div class="thermometer">
+        <div class="arrow" id="arrow"></div>
+      </div>
+    </div>
 
-        <!-- дуга -->
-        <path d="M70 250 A180 180 0 0 1 430 250"
-              stroke="url(#gradient)" stroke-width="20" fill="none"
-              stroke-linecap="round" filter="drop-shadow(0 0 3px white)"/>
-
-        <!-- подписи -->
-        <text class="label"><textPath href="#arc" startOffset="5%">Приятное общение</textPath></text>
-        <text class="label"><textPath href="#arc" startOffset="25%">Симпатия</textPath></text>
-        <text class="label"><textPath href="#arc" startOffset="50%">Влюблённость</textPath></text>
-        <text class="label"><textPath href="#arc" startOffset="72%">Любовь</textPath></text>
-        <text class="label"><textPath href="#arc" startOffset="92%">Ваня + Настя 💖</textPath></text>
-
-        <!-- стрелка -->
-        <polygon id="needle" points="247,250 253,250 250,120" fill="white"/>
-        <circle cx="250" cy="250" r="10" fill="white"/>
-      </svg>
+    <!-- Фото снизу -->
+    <div class="photo bottom-photo">
+      <img src="bottom.jpg" alt="Фото снизу">
     </div>
 
     <!-- Кнопка -->
-    <button id="startBtn">Измерить любовь 💘</button>
+    <button id="loveButton">Показать уровень любви 💖</button>
 
-    <!-- Результат -->
-    <div id="result"></div>
+    <!-- Музыка -->
+    <audio id="loveSong" src="music.mp3"></audio>
   </div>
-
-  <!-- Музыка -->
-  <audio id="bgMusic" src="song.mp3"></audio>
 
   <script src="script.js"></script>
 </body>
