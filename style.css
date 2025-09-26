@@ -29,18 +29,23 @@ body {
   height: 300px;
 }
 
-text {
+.label {
   font-size: 16px;
   fill: white;
-  text-anchor: middle;
   font-weight: bold;
-  filter: drop-shadow(0 0 5px rgba(255,255,255,0.7));
+  text-anchor: middle;
+  dominant-baseline: middle;
+  filter: drop-shadow(0 0 5px rgba(255,255,255,0.6));
+}
+
+.active {
+  fill: #ffeb3b;
+  filter: drop-shadow(0 0 12px #fff176);
 }
 
 #needle {
   transform-origin: 250px 250px;
-  transform: rotate(-90deg);
-  transition: transform 5s ease-in-out;
+  transition: transform 0.2s ease-in-out;
 }
 
 button {
@@ -66,4 +71,21 @@ button:hover {
   font-size: 22px;
   font-weight: bold;
   text-shadow: 0 0 10px rgba(255,255,255,0.8);
+}
+
+.heart {
+  position: fixed;
+  bottom: 0;
+  font-size: 24px;
+  color: #ff80ab;
+  animation: floatUp 4s linear forwards;
+}
+
+.heart::before {
+  content: "❤️";
+}
+
+@keyframes floatUp {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-100vh); opacity: 0; }
 }
