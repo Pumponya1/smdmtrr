@@ -30,11 +30,10 @@ body {
 }
 
 .label {
-  font-size: 16px;
+  font-size: 13px;
   fill: white;
   font-weight: bold;
   text-anchor: middle;
-  dominant-baseline: middle;
   filter: drop-shadow(0 0 5px rgba(255,255,255,0.6));
 }
 
@@ -45,7 +44,6 @@ body {
 
 #needle {
   transform-origin: 250px 250px;
-  transition: transform 0.2s ease-in-out;
 }
 
 button {
