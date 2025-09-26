@@ -1,60 +1,68 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Шкала нашей любви</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="page">
-
-    <!-- Верхняя фотография -->
-    <header class="hero">
-      <div class="photo-ring">
-        <img src="photo.jpg" alt="Мы" />
-      </div>
-      <h1>Шкала нашей любви</h1>
-      <p class="tagline">от общения — к самому пику чувств</p>
-    </header>
-
-    <!-- Спидометр -->
-    <main class="gauge-wrap">
-      <div class="gauge-card">
-        <svg id="loveGauge" viewBox="-180 -40 360 240" aria-label="Шкала любви">
-          <!-- Полуокружность -->
-          <path id="arc" d="M -150,120 A 150 150 0 0 1 150 120" class="arc"></path>
-
-          <!-- Засечки -->
-          <g id="ticks"></g>
-
-          <!-- Подписи -->
-          <g id="labels"></g>
-
-          <!-- Ось -->
-          <circle cx="0" cy="120" r="6" class="axis"></circle>
-
-          <!-- Стрелка -->
-          <g id="needle" class="needle" transform="rotate(-90)">
-            <polygon points="-4,120 4,120 0,-10"></polygon>
-            <path d="M0,10 c -4,-6 -12,-6 -12,2 c 0,6 6,10 12,16 c 6,-6 12,-10 12,-16 c 0,-8 -8,-8 -12,-2 Z"
-                  class="heart-tip"/>
-          </g>
-        </svg>
-
-        <div class="readout">
-          <span id="levelText">Готовы?</span>
-        </div>
-
-        <div class="controls">
-          <button id="btnMeasure" class="btn primary">Измерить любовь ❤️</button>
-        </div>
-      </div>
-    </main>
+  <div class="container">
+    <div class="photo-container">
+      <img src="photo.jpg" alt="Пара" class="avatar" />
+    </div>
+    <div class="gauge-container">
+      <svg class="gauge-svg" viewBox="0 0 500 260">
+        <!-- Дуга -->
+        <defs>
+          <linearGradient id="arcGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#ff9ec8" />
+            <stop offset="50%" stop-color="#ff7f50" />
+            <stop offset="100%" stop-color="#ff4f4f" />
+          </linearGradient>
+          <path
+            id="arcPath"
+            d="M 40 230 A 220 220 0 0 1 460 230"
+            fill="none"
+          />
+        </defs>
+        <path
+          d="M 40 230 A 220 220 0 0 1 460 230"
+          stroke="url(#arcGradient)"
+          stroke-width="20"
+          fill="none"
+        />
+        <!-- Текст уровней -->
+        <text class="gauge-text">
+          <textPath href="#arcPath" startOffset="3%" textLength="450">
+            Приятное общение · Симпатия · Влюблённость · Любовь · Ваня + Настя 💖
+          </textPath>
+        </text>
+        <!-- Стрелка -->
+        <line
+          id="needle"
+          x1="250"
+          y1="230"
+          x2="250"
+          y2="50"
+          stroke="white"
+          stroke-width="5"
+          stroke-linecap="round"
+          transform="rotate(-90, 250, 230)"
+        />
+        <circle cx="250" cy="230" r="8" fill="white" />
+      </svg>
+    </div>
+    <div class="controls">
+      <button id="measureBtn">Измерить любовь 💘</button>
+      <div id="resultText" class="result-text"></div>
+    </div>
   </div>
 
-  <!-- Музыка -->
-  <audio id="song" src="song.mp3"></audio>
+  <audio id="bgMusic" loop>
+    <source src="song.mp3" type="audio/mpeg" />
+    Тег audio не поддерживается вашим браузером.
+  </audio>
 
   <script src="script.js"></script>
 </body>
