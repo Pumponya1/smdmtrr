@@ -1,21 +1,20 @@
 :root{
-  /* Фон: фиолетово-розовый градиент */
-  --bg1:#5f0a87;   /* фиолетовый */
-  --bg2:#a4508b;   /* мажента */
-  --bg3:#ff6f91;   /* розовый */
+  --bg1:#5f0a87;
+  --bg2:#a4508b;
+  --bg3:#ff6f91;
 
   --text:#fff;
   --muted:#ffd3ec;
-  --accent:#ff4d6d;    /* сердечко стрелки */
-  --tick:#ffffffcc;    /* засечки */
-  --active:#ffd1e6;    /* подсветка активного уровня */
+  --accent:#ff4d6d;
+  --tick:#ffffffcc;
+  --active:#ffd1e6;
 }
 
 *{box-sizing:border-box}
 html,body{height:100%}
 body{
   margin:0; color:var(--text);
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, "Noto Sans", sans-serif;
+  font-family: system-ui, sans-serif;
   background: linear-gradient(135deg, var(--bg1), var(--bg2), var(--bg3));
 }
 
@@ -26,12 +25,11 @@ body{
   display:flex; flex-direction:column; align-items:center; gap:12px;
 }
 
-/* Яркая, но без мигания */
 .photo-ring{
   width:132px; height:132px; border-radius:50%;
   padding:6px;
-  background: conic-gradient(#ff6f91, #ff3f8e, #9f2bc1, #ff6f91);
-  box-shadow:0 6px 24px #0006, 0 0 0 3px #ffffff30 inset;
+  background: conic-gradient(#ff6f91,#ff3f8e,#9f2bc1,#ff6f91);
+  box-shadow:0 6px 24px #0006;
 }
 .photo-ring img{
   width:100%; height:100%;
@@ -46,9 +44,11 @@ h1{margin:6px 0 0; font-weight:800;}
 .gauge-card{
   width:min(720px, 92vw);
   background:#0000001a; border-radius:24px; padding:20px;
-  position:relative; overflow:hidden;
+  position:relative;
   backdrop-filter: blur(8px);
   box-shadow:0 10px 30px #0008;
+  text-align:center;
+  z-index:1;
 }
 
 svg{ width:100%; height:auto; display:block; }
@@ -60,11 +60,10 @@ svg{ width:100%; height:auto; display:block; }
   stroke-linecap:round;
 }
 
-/* Засечки и подписи */
 #ticks line{ stroke:var(--tick); stroke-width:2 }
 #labels text{
   fill:#fff; font-size:16px; letter-spacing:.2px;
-  paint-order: stroke; stroke:#0008; stroke-width:2px; /* читаемость на фоне */
+  paint-order: stroke; stroke:#0008; stroke-width:2px;
   transition: transform .18s ease, fill .18s ease, text-shadow .18s ease;
 }
 #labels text.active{
@@ -72,23 +71,16 @@ svg{ width:100%; height:auto; display:block; }
   text-shadow: 0 0 12px #fff8, 0 0 24px #ffd1e6cc;
 }
 
-/* Стрелка */
 .axis{ fill:#fff }
 .needle{ transform-origin: 0px 120px; filter: drop-shadow(0 6px 14px #0008) }
 .needle polygon{ fill:#fff }
 .needle .heart-tip{ fill:var(--accent) }
 
-/* Подпись-значение */
-.readout{ text-align:center; margin-top:12px; font-weight:800; font-size:1.2rem; }
-.controls{ margin-top:12px; display:flex; justify-content:center; }
+.readout{ margin-top:12px; font-weight:800; font-size:1.2rem; }
+.controls{ margin-top:16px; }
 .btn{
   cursor:pointer; border:none; border-radius:14px;
   padding:12px 18px; font-weight:800;
   background:linear-gradient(90deg,#8e2de2,#ff6f91); color:#fff;
   box-shadow:0 10px 20px #8e2de250;
-}
-
-/* Мобилки */
-@media (max-width:520px){
-  #labels text{ font-size:14px }
 }
