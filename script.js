@@ -1,110 +1,69 @@
-const LEVELS = [
-  "Приятное общение",
-  "Дружба",
-  "Симпатия",
-  "Любовь",
-  "Ваня + Настя"
+const measureBtn = document.getElementById('measureBtn');
+const needle = document.getElementById('needle');
+const resultText = document.getElementById('resultText');
+const bgMusic = document.getElementById('bgMusic');
+
+const levels = [
+  { name: 'Приятное общение ✨', angle: -90 + (0 *  (180 / 4)) },
+  { name: 'Симпатия 😊', angle: -90 + (1 * (180 / 4)) },
+  { name: 'Влюблённость 💕', angle: -90 + (2 * (180 / 4)) },
+  { name: 'Любовь ❤️', angle: -90 + (3 * (180 / 4)) },
+  { name: 'Ваня + Настя 💖 Судьба!', angle: -90 + (4 * (180 / 4)) },
 ];
 
-const ticksGroup  = document.getElementById("ticks");
-const labelsGroup = document.getElementById("labels");
-const needle      = document.getElementById("needle");
-const levelText   = document.getElementById("levelText");
-const btnMeasure  = document.getElementById("btnMeasure");
-const song        = document.getElementById("song");
+let isRunning = false;
 
-const CENTER={x:0,y:120}, R=150, START=-90, END=90, SPAN=END-START;
-const toRad = d => d*Math.PI/180;
-const clamp = (v,a,b)=>Math.max(a,Math.min(b,v));
+function startMeasure() {
+  if (isRunning) return;
+  isRunning = true;
 
-function drawScale() {
-  ticksGroup.innerHTML = "";
-  labelsGroup.innerHTML = "";
-  for (let i=0;i<LEVELS.length;i++) {
-    const t=i/(LEVELS.length-1);
-    const ang=START+t*SPAN;
-    const rad=toRad(ang);
-
-    const x1=CENTER.x+R*Math.cos(rad),
-          y1=CENTER.y+R*Math.sin(rad),
-          x2=CENTER.x+(R-14)*Math.cos(rad),
-          y2=CENTER.y+(R-14)*Math.sin(rad);
-
-    const line=document.createElementNS("http://www.w3.org/2000/svg","line");
-    line.setAttribute("x1",x1); line.setAttribute("y1",y1);
-    line.setAttribute("x2",x2); line.setAttribute("y2",y2);
-    ticksGroup.appendChild(line);
-
-    const lx=CENTER.x+(R-38)*Math.cos(rad),
-          ly=CENTER.y+(R-38)*Math.sin(rad);
-    const text=document.createElementNS("http://www.w3.org/2000/svg","text");
-    text.setAttribute("x",lx); text.setAttribute("y",ly);
-    text.setAttribute("text-anchor","middle");
-    text.textContent=LEVELS[i];
-    labelsGroup.appendChild(text);
-  }
-}
-drawScale();
-
-let currentAngle=START;
-
-function highlightByAngle(angleDeg){
-  const part=clamp((angleDeg-START)/SPAN,0,1);
-  const idx=Math.round(part*(LEVELS.length-1));
-  const texts=labelsGroup.querySelectorAll("text");
-  texts.forEach(t=>t.classList.remove("active"));
-  if(texts[idx]) texts[idx].classList.add("active");
-  levelText.textContent=texts[idx]?texts[idx].textContent:"Готовы?";
-}
-
-function animateTo(angle,duration=1200){
-  const start=currentAngle, delta=angle-start, t0=performance.now();
-  return new Promise(resolve=>{
-    function step(t){
-      const p=Math.min(1,(t-t0)/duration);
-      const ease=1-Math.pow(1-p,3);
-      const a=start+delta*ease;
-      needle.setAttribute("transform",`rotate(${a})`);
-      highlightByAngle(a);
-      if(p<1) requestAnimationFrame(step);
-      else { currentAngle=angle; resolve(); }
-    }
-    requestAnimationFrame(step);
-  });
-}
-
-async function stormyThenFinal(){
-  btnMeasure.disabled=true;
-  levelText.textContent="Измеряем...";
-  try{ song.currentTime=0; song.play(); }catch(e){}
-
-  const total=5000, t0=performance.now();
-  let aPrev=START;
-
-  function frame(now){
-    const elapsed=now-t0, p=clamp(elapsed/total,0,1);
-    const mean=START+(SPAN*0.9)*(1-Math.pow(1-p,2));
-    const amp=10*(1-p)+3*p;
-    const sin=Math.sin(now/120)*amp;
-    const rand=(Math.random()-0.5)*amp*0.4;
-    const ang=clamp(mean+sin+rand,START,END);
-    const a=aPrev+(ang-aPrev)*0.35;
-    aPrev=a;
-
-    needle.setAttribute("transform",`rotate(${a})`);
-    highlightByAngle(a);
-
-    if(elapsed<total) requestAnimationFrame(frame);
-    else animateTo(END-2,1500).then(()=>{
-      levelText.textContent=LEVELS[LEVELS.length-1];
-      btnMeasure.disabled=false;
+  // Запустить музыку, если еще не играет
+  if (bgMusic.paused) {
+    bgMusic.play().catch(err => {
+      // если автозапуск запрещен, не страшно
+      console.log('Music play failed:', err);
     });
   }
-  requestAnimationFrame(frame);
+
+  // случайный уровень
+  const idx = Math.floor(Math.random() * levels.length);
+  const level = levels[idx];
+
+  // анимация: изначальный угол — -90, до целевого
+  const fromAngle = -90;
+  const toAngle = level.angle;
+
+  const duration = 5000 + Math.random() * 2000; // 5–7 секунд
+  const startTime = performance.now();
+
+  function animate(time) {
+    const elapsed = time - startTime;
+    const t = Math.min(elapsed / duration, 1);
+    // ease-in-out
+    const ease = t < 0.5
+      ? 2 * t * t
+      : -1 + (4 - 2 * t) * t;
+
+    const currentAngle = fromAngle + (toAngle - fromAngle) * ease;
+    needle.setAttribute('transform', `rotate(${currentAngle}, 250, 230)`);
+
+    if (t < 1) {
+      requestAnimationFrame(animate);
+    } else {
+      // остановились
+      resultText.textContent = level.name;
+      isRunning = false;
+      // через 20 секунд вернуть стрелку на -90
+      setTimeout(() => {
+        needle.setAttribute('transform', `rotate(-90, 250, 230)`);
+        resultText.textContent = '';
+      }, 20000);
+    }
+  }
+
+  requestAnimationFrame(animate);
 }
 
-btnMeasure.addEventListener("click", stormyThenFinal);
+measureBtn.addEventListener('click', startMeasure);
 
-// Начальное состояние
-needle.setAttribute("transform",`rotate(${START})`);
-highlightByAngle(START);
+// (по желанию: секретный режим кликом по фото — добавление сердечек)
