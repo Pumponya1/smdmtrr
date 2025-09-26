@@ -1,4 +1,3 @@
-// Подписи уровней
 const LEVELS = [
   "Приятное общение",
   "Дружеская симпатия",
@@ -17,13 +16,10 @@ const btnMeasure = document.getElementById("btnMeasure");
 const btnAgain = document.getElementById("btnAgain");
 const song = document.getElementById("song");
 
-document.getElementById("today").textContent =
-  new Date().toLocaleDateString("ru-RU",{year:"numeric",month:"long",day:"numeric"});
-
 const CENTER={x:0,y:120}, R=140, START=-90, END=90;
 const toRad=d=>d*Math.PI/180;
 
-// Рисуем шкалу
+// Отрисовка шкалы
 function draw(){
   ticksGroup.innerHTML=""; labelsGroup.innerHTML="";
   for(let i=0;i<LEVELS.length;i++){
@@ -62,18 +58,18 @@ function animateTo(angle,label){
   requestAnimationFrame(step);
 }
 
-// Сердечки при достижении
+// Сердечки
 function burstHearts(){
-  for(let i=0;i<12;i++){
+  for(let i=0;i<10;i++){
     const el=document.createElement("div");
     el.textContent="❤";
     el.style.position="fixed";
     el.style.left="50%"; el.style.top="60%";
-    el.style.fontSize="24px";
+    el.style.fontSize="22px"; el.style.color="#ff6f91";
     el.style.pointerEvents="none";
     document.body.appendChild(el);
     const dx=(Math.random()*2-1)*120;
-    const dy=- (100+Math.random()*100);
+    const dy=- (100+Math.random()*120);
     el.animate([
       {transform:"translate(0,0)",opacity:1},
       {transform:`translate(${dx}px,${dy}px)`,opacity:0}
