@@ -1,43 +1,58 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <title>Шкала Любви</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Шкала нашей любви</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
+  <div class="page">
 
-    <!-- Фото сверху -->
-    <div class="photo top-photo">
-      <img src="top.jpg" alt="Фото сверху">
-    </div>
-
-    <!-- Шкала любви -->
-    <div class="scale">
-      <div class="labels">
-        <div>😊 Приятное общение</div>
-        <div>🤗 Дружеская симпатия</div>
-        <div>💘 Влюблённость</div>
-        <div>❤️ Любовь</div>
-        <div>✨ Ваня + Настя</div>
+    <!-- Верхняя фотография -->
+    <header class="hero">
+      <div class="photo-ring">
+        <img src="photo.jpg" alt="Мы" />
       </div>
-      <div class="thermometer">
-        <div class="arrow" id="arrow"></div>
+      <h1>Шкала нашей любви</h1>
+      <p class="tagline">от общения — к самому пику чувств</p>
+    </header>
+
+    <!-- Спидометр -->
+    <main class="gauge-wrap">
+      <div class="gauge-card">
+        <div class="hearts-bg" aria-hidden="true"></div>
+
+        <svg id="loveGauge" viewBox="-160 -20 320 200">
+          <path d="M -140,120 A 140 140 0 0 1 140 120" class="arc"></path>
+          <g id="ticks"></g>
+          <g id="labels"></g>
+          <circle cx="0" cy="120" r="6" class="axis"></circle>
+          <g id="needle" class="needle" transform="rotate(-90)">
+            <polygon points="-4,120 4,120 0,-10"></polygon>
+            <path d="M0,10 c -4,-6 -12,-6 -12,2 c 0,6 6,10 12,16 c 6,-6 12,-10 12,-16 c 0,-8 -8,-8 -12,-2 Z"
+                  class="heart-tip"/>
+          </g>
+        </svg>
+
+        <div class="readout">
+          <span id="levelText">Готовы?</span>
+        </div>
+
+        <div class="controls">
+          <button id="btnMeasure" class="btn primary">Измерить любовь ❤️</button>
+          <button id="btnAgain" class="btn ghost">Ещё раз</button>
+        </div>
       </div>
-    </div>
+    </main>
 
-    <!-- Фото снизу -->
-    <div class="photo bottom-photo">
-      <img src="bottom.jpg" alt="Фото снизу">
-    </div>
-
-    <!-- Кнопка -->
-    <button id="loveButton">Показать уровень любви 💖</button>
-
-    <!-- Музыка -->
-    <audio id="loveSong" src="music.mp3"></audio>
+    <footer class="footnote">
+      <small>Сделано сердцем · <span id="today"></span></small>
+    </footer>
   </div>
+
+  <!-- Музыка -->
+  <audio id="song" src="song.mp3"></audio>
 
   <script src="script.js"></script>
 </body>
