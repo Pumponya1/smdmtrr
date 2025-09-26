@@ -23,18 +23,29 @@
       <img src="images/p6.jpg" alt="">
     </div>
 
-    <!-- Спидометр (SVG с текстом по дуге) -->
+    <!-- Спидометр -->
     <div class="speedometer">
       <svg viewBox="0 0 500 300">
-        <path id="arc" d="M 50 250 A 200 200 0 0 1 450 250" fill="none"/>
-        
-        <text class="label"><textPath href="#arc" startOffset="5%">Приятное общение</textPath></text>
+        <!-- дуга -->
+        <defs>
+          <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#4facfe"/>
+            <stop offset="50%" stop-color="#ff9a9e"/>
+            <stop offset="100%" stop-color="#ff6f91"/>
+          </linearGradient>
+        </defs>
+        <path id="arc" d="M 50 250 A 200 200 0 0 1 450 250"
+              stroke="url(#grad)" stroke-width="20" fill="none" />
+
+        <!-- подписи -->
+        <text class="label"><textPath href="#arc" startOffset="5%" side="left" method="stretch" spacing="auto">Приятное общение</textPath></text>
         <text class="label"><textPath href="#arc" startOffset="25%">Симпатия</textPath></text>
         <text class="label"><textPath href="#arc" startOffset="45%">Влюблённость</textPath></text>
         <text class="label"><textPath href="#arc" startOffset="65%">Любовь</textPath></text>
         <text class="label highlight"><textPath href="#arc" startOffset="85%">Ваня + Настя 💖</textPath></text>
 
-        <line id="needle" x1="250" y1="250" x2="50" y2="250"></line>
+        <!-- стрелка -->
+        <polygon id="needle" points="250,250 245,120 255,120" />
       </svg>
     </div>
 
